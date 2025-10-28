@@ -5,6 +5,16 @@ import streamlit as st
 import numpy as np
 from collections import Counter
 import math
+import colorsys
+
+def get_hsv(hexrgb):
+    hexrgb = hexrgb.lstrip("#")   # in case you have Web color specs
+    r, g, b = (int(hexrgb[i:i+2], 16) / 255.0 for i in range(0,5,2))
+    return colorsys.rgb_to_hsv(r, g, b)
+
+def sort_colors(color_list):
+    color_list.sort(key=get_hsv)
+    return color_list
 
 def get_text_color(hex_color):
     rgb = tuple(int(hex_color.lstrip('#')[i:i+2], 16) for i in (0, 2, 4))
@@ -56,15 +66,15 @@ def main():
         # convert each array like [R,G,B] → tuple(R,G,B)
         colors_as_tuples = [tuple(map(int, c)) for c in colors]
         sorted_colors = sorted(zip(counts.values(), colors_as_tuples), reverse=True)
-        counts_sorted = [c[0] for c in sorted_colors]
         colors_sorted = [c[1] for c in sorted_colors]
 
         hex_colors = ['#%02x%02x%02x' % tuple(c) for c in colors_sorted]
         num_cols = math.ceil(len(hex_colors)/10)
         cols = col2.columns(num_cols)
-    
-        for i, color in enumerate(hex_colors):
-            col_index = i % num_cols  # distribute colors evenly
+        colors = sort_colors(hex_colors)
+
+        for i, color in enumerate(colors):
+            col_index = i % num_cols 
             cols[col_index].markdown(
                 f"""
                 <div style="
@@ -80,6 +90,10 @@ def main():
                 """,
                 unsafe_allow_html=True
             )
+        
+        
+        
+        
 
 if __name__ == "__main__":
     main()
