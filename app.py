@@ -42,10 +42,11 @@ def main():
                   </h2>""", unsafe_allow_html=True)
 
     uploaded_file = col1.file_uploader("Upload an image", type=["jpg", "jpeg", "png","svg","webp"])
+    col1.image(uploaded_file, width=300)
+    col1.divider()
     k = col1.number_input(label="Number of colors in palette", min_value=1, max_value=50, value=1)
 
     if uploaded_file is not None:
-        col1.image(uploaded_file, width=300)
 
         image = cv2.imdecode(np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8),cv2.IMREAD_COLOR)
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB) 
