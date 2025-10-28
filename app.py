@@ -43,8 +43,8 @@ def main():
 
     uploaded_file = col1.file_uploader("Upload an image", type=["jpg", "jpeg", "png","svg","webp"])
     k = col1.number_input(label="Number of colors in palette", min_value=1, max_value=50, value=1)
+
     if uploaded_file is not None:
-        
         col1.image(uploaded_file, width=300)
 
         image = cv2.imdecode(np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8),cv2.IMREAD_COLOR)
@@ -85,14 +85,12 @@ def main():
                     color: {get_text_color(color)};
                     margin-bottom: 8px;
                 ">
-                    {color}
+                    <span>{color}</span>
+                    <span>{colors_sorted[i]}</span>
                 </div>
                 """,
                 unsafe_allow_html=True
             )
-        
-        
-        
         
 
 if __name__ == "__main__":
