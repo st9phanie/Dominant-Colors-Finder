@@ -86,8 +86,8 @@ def main():
                     color: {get_text_color(color)};
                     margin-bottom: 8px;
                 ">
-                    <span>{color}</span>
-                    <span>{colors_sorted[i]}</span>
+                    <span style="margin-right:10px;">{color}</span>
+                    <span>rgb({colors_sorted[i]})</span>
                 </div>
                 """,
                 unsafe_allow_html=True
